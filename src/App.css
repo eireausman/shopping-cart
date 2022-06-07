@@ -1,0 +1,132 @@
+#root {
+  min-width: 350px;
+}
+
+.navContainer {
+  display: flex;
+  position: sticky;
+  top: 0px;
+  left: 0px;
+  justify-content: space-between;
+  align-items: center;
+  height: 30px;
+  background-color: blanchedalmond;
+  border-bottom: 1px solid grey;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.navLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.cartSummary {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: nowrap;
+  border-radius: 10%;
+  background-color: aqua;
+  padding: 5px;
+  gap: 5px;
+  text-decoration: none;
+}
+
+.itemCount {
+  background-color: rgb(39, 39, 39);
+  padding: 6px;
+  font-size: 0.9rem;
+  color: white;
+  border-radius: 20%;
+}
+
+.productsCards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  min-width: 220px;
+  gap: 10px;
+}
+
+.allProductsProductForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 250px;
+  border-radius: 5px;
+}
+
+.allProductsImgCntr {
+  display: flex;
+  justify-content: center;
+  height: 260px;
+}
+
+.allProductsImg {
+  max-width: 200px;
+  max-height: 250px;
+}
+
+.allProductsTitlePrice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cartContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.cartItemsList {
+  display: flex;
+  flex-direction: column;
+  min-width: 80vw;
+}
+
+.cartItemRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  min-height: 60px;
+  border: 1px solid black;
+}
+
+.cartProductName {
+  width: 200px;
+}
+
+.cartTotalValue {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+  margin: 0px 20px 0px 0px;
+  min-width: 80vw;
+}
+
+.singleProductForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.singleProductImg {
+  max-width: 250px;
+  max-height: 350px;
+}
+
+.productQtyCntrls {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.productPageItemQty {
+  width: 20px;
+}
