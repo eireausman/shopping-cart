@@ -10,8 +10,10 @@ const Navtop = ({ cartTotal, cartItemCount }) => {
       </nav>
       <Link to="/Cart">
         <div className="cartSummary">
-          <div className="itemCount">{cartItemCount}</div>
-          <div className="cartValue">
+          <div data-testid={`itemCount`} className="itemCount">
+            {cartItemCount}
+          </div>
+          <div data-testid={`cartValue`} className="cartValue">
             total: $ {parseFloat(cartTotal).toFixed(2)}
           </div>
         </div>
