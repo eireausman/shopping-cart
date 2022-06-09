@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { singleProductFetch } from "../modules/productsAPI";
 
-const Product = ({ addItemToCart, jestTestItem }) => {
+const Product = ({ addItemToCart }) => {
   const { id } = useParams();
 
   const [itemQtyInput, setItemQtyInput] = useState(1);
@@ -10,14 +10,6 @@ const Product = ({ addItemToCart, jestTestItem }) => {
   const [addToCartButtonDisabled, setAddToCartButtonDisabled] = useState(true);
   const [productDataIsNotYetPresent, setProductDataIsNotYetPresent] =
     useState(true); // used to provide a loading message to user while awaiting product data from the API
-
-  useEffect(() => {
-    // used if the Jest Test is rendering the component.
-    if (jestTestItem !== undefined) {
-      setProduct(jestTestItem);
-      setProductDataIsNotYetPresent(false);
-    }
-  }, [jestTestItem]);
 
   useEffect(() => {
     // fetch the product data on page load

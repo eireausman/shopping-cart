@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import { allProductsFetch } from "../modules/productsAPI";
 
-const AllProducts = ({ jestTestProductData }) => {
+const AllProducts = () => {
   const [products, setProducts] = useState([]);
   const [productDataIsNotYetPresent, setProductDataIsNotYetPresent] =
     useState(true); // used to provide a loading message to user while awaiting product data from the API
@@ -14,15 +14,6 @@ const AllProducts = ({ jestTestProductData }) => {
       .then((data) => setProducts(data))
       .then((data) => setProductDataIsNotYetPresent(false));
   }, []);
-
-  useEffect(() => {
-    // used if the Jest Test is rendering the component.
-
-    if (jestTestProductData !== undefined) {
-      setProducts(jestTestProductData);
-      setProductDataIsNotYetPresent(false);
-    }
-  }, [jestTestProductData]);
 
   return (
     <Fragment>

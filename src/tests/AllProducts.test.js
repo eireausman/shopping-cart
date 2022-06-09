@@ -8,23 +8,26 @@ import * as API from "../modules/productsAPI";
 import { createMemoryHistory } from "history";
 
 const URL_PATH = "http://localhost/";
-const history = createMemoryHistory();
+
+afterEach(() => {
+  // cleanup on exiting
+  jest.clearAllMocks();
+});
 
 describe("All Product Page Test", () => {
-  afterEach(async () => {
-    // jest.clearAllMocks();
-  });
   it("Loading message appears on page", () => {
     act(() => {
       render(<AllProducts />);
     });
     expect(screen.getByTestId("pageLoading").textContent).toBe("Loading Page");
   });
-  it("Product URL appears as expected", () => {
-    act(() => {
+  it("Product URL appears as expected", async () => {
+    API.allProductsFetch = jest.fn();
+    API.allProductsFetch.mockResolvedValue(ProductsData);
+    await act(async () => {
       render(
         <BrowserRouter>
-          <AllProducts jestTestProductData={ProductsData} />
+          <AllProducts />
         </BrowserRouter>
       );
     });
@@ -32,10 +35,25 @@ describe("All Product Page Test", () => {
       `${URL_PATH}Product/1`
     );
   });
-  it("API is called once on initial load", () => {
+  it("API is called once on initial load", async () => {
     API.allProductsFetch = jest.fn();
     API.allProductsFetch.mockResolvedValue(ProductsData);
-    act(() => {
+
+    await act(async () => {
+      render(
+        <BrowserRouter>
+          <AllProducts />
+        </BrowserRouter>
+      );
+    });
+    expect(API.allProductsFetch).toBeCalled();
+    expect(API.allProductsFetch).toBeCalledTimes(1);
+  });
+  it("EDITING API is called once on initial load", async () => {
+    API.allProductsFetch = jest.fn();
+    API.allProductsFetch.mockResolvedValue(ProductsData);
+
+    await act(async () => {
       render(
         <BrowserRouter>
           <AllProducts />

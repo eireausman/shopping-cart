@@ -5,7 +5,10 @@ import Product from "../components/Product";
 import { act } from "react-dom/test-utils";
 import * as API from "../modules/productsAPI";
 
-jest.mock("../modules/productsAPI");
+afterEach(() => {
+  // cleanup on exiting
+  jest.clearAllMocks();
+});
 
 const productData = {
   id: "3",
@@ -15,21 +18,21 @@ const productData = {
 };
 
 describe("Single Product Page Test", () => {
-  it("Page is Loading message shows as expected", () => {
+  it("Page is Loading message shows as expected", async () => {
     const addItemToCartMock = jest.fn();
-    act(() => {
+    await act(async () => {
       render(<Product addItemToCart={addItemToCartMock} />);
     });
     expect(screen.getByTitle("ProductLoadMessage").textContent).toBe(
       "Product Loading - Please Wait"
     );
   });
-  it("Product values are set correctly on page load", () => {
+  it("Product values are set correctly on page load", async () => {
     const addItemToCartMock = jest.fn();
-    act(() => {
-      render(
-        <Product addItemToCart={addItemToCartMock} jestTestItem={productData} />
-      );
+    API.singleProductFetch = jest.fn();
+    API.singleProductFetch.mockResolvedValue(productData);
+    await act(async () => {
+      render(<Product addItemToCart={addItemToCartMock} />);
     });
     expect(screen.getByTitle("itemID").value).toBe("3");
     expect(screen.getByTitle("ProductTitle").textContent).toBe(
@@ -40,12 +43,12 @@ describe("Single Product Page Test", () => {
     );
     expect(screen.getByTitle("addToCartButton").disabled).toBe(false);
   });
-  it("Increment and decrement work as expected", () => {
+  it("Increment and decrement work as expected", async () => {
     const addItemToCartMock = jest.fn();
-    act(() => {
-      render(
-        <Product addItemToCart={addItemToCartMock} jestTestItem={productData} />
-      );
+    API.singleProductFetch = jest.fn();
+    API.singleProductFetch.mockResolvedValue(productData);
+    await act(async () => {
+      render(<Product addItemToCart={addItemToCartMock} />);
     });
     userEvent.click(screen.getByTitle("add1")); // Increment 1
     expect(screen.getByTitle("itemQty").value).toBe("2");
@@ -54,20 +57,20 @@ describe("Single Product Page Test", () => {
   });
   it("Changing quantity within Quantity input updates the field value", async () => {
     const addItemToCartMock = jest.fn();
-    act(() => {
-      render(
-        <Product addItemToCart={addItemToCartMock} jestTestItem={productData} />
-      );
+    API.singleProductFetch = jest.fn();
+    API.singleProductFetch.mockResolvedValue(productData);
+    await act(async () => {
+      render(<Product addItemToCart={addItemToCartMock} />);
     });
     await userEvent.type(screen.getByTestId("itemQty"), "2");
     expect(screen.getByTitle("itemQty").value).toBe("12");
   });
   it("Adding an item to cart adds the item and resets quantity field", async () => {
     const addItemToCartMock = jest.fn();
-    act(() => {
-      render(
-        <Product addItemToCart={addItemToCartMock} jestTestItem={productData} />
-      );
+    API.singleProductFetch = jest.fn();
+    API.singleProductFetch.mockResolvedValue(productData);
+    await act(async () => {
+      render(<Product addItemToCart={addItemToCartMock} />);
     });
     userEvent.click(screen.getByTitle("add1")); // Increment 1
     expect(screen.getByTitle("itemQty").value).toBe("2");
@@ -76,9 +79,11 @@ describe("Single Product Page Test", () => {
     expect(addItemToCartMock).toBeCalledTimes(1);
     expect(screen.getByTestId("itemQty").value).toBe("1");
   });
-  it("API is called once on initial load", () => {
+  it("API is called once on initial load", async () => {
     const addItemToCartMock = jest.fn();
-    act(() => {
+    API.singleProductFetch = jest.fn();
+    API.singleProductFetch.mockResolvedValue(productData);
+    await act(async () => {
       render(<Product addItemToCart={addItemToCartMock} />);
     });
     expect(API.singleProductFetch).toHaveBeenCalled();
